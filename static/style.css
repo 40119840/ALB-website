@@ -1,0 +1,246 @@
+body
+{
+  background-image: url("/static/background.jpg");
+  background-size: 100% ,100%;  
+}
+
+
+#header
+{
+  z-index: 999;
+  top:-1px;
+  left:0px;
+  width: 99.9%;
+  height: 75px;
+  position: fixed;
+  bottom: 0px;
+  margin: 0px;
+  background: rgba(30, 91, 137, 0.95);
+  border: 1px solid #269; 
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  font-family: Courier New, Helvetica, sans-serif;
+}
+
+#webname
+{
+  z-index: 999;
+  top:20px;
+  left:2.5%;
+  right:2.5%;
+  width: 95%;
+  height: 60px;
+  position: fixed;
+  bottom: 0px;
+  margin: 0px;
+  background: rgba(30, 91, 137, 0.95);
+  border: 1px solid #269; 
+  font-size:40px;
+  font-family: Courier New, Helvetica, sans-serif;
+
+}
+
+#mainBody 
+{
+  width: 90%;
+  top:15%;
+  left:5%;
+  border: 1px solid #269;
+  background: rgba(30, 91, 137, 0.5);
+  height: 30%;
+  position: absolute;
+  margin: 0px;
+  color: white;
+  font-family: Courier New, Helvetica, sans-serif;
+}
+
+#LoginBox
+{
+  z-index: 999;
+  position: fixed;
+  top: 20%;
+  left:15%;
+  background: rgba(30, 91, 137, 0.8);
+  border: 1px solid #269;
+  font-family: Courier New, Helvetica, sans-serif; 
+  padding:25px;
+}
+
+#NewPostBox
+{
+  z-index: 999;
+  position: fixed;
+  top: 20%;
+  bottom : 8%;
+  right:15%;
+  background: rgba(30, 91, 137, 0.8);
+  border: 1px solid #269;
+  font-family: Courier New, Helvetica, sans-serif; 
+  padding:25px;
+}
+
+#CreateAccountBox
+{
+  z-index: 999;
+  position: fixed;
+  top: 20%;
+  bottom : 8%;
+  right:15%;
+  background: rgba(30, 91, 137, 0.8);
+  border: 1px solid #269;
+  font-family: Courier New, Helvetica, sans-serif; 
+  padding:25px;
+}
+
+#MapBox
+{
+ width: 25%;
+  z-index: 999;
+  position: fixed;
+  bottom: 8%;
+  left:10%;
+  background: rgba(30, 91, 137, 0.8);
+  border: 1px solid #269;
+  font-family: Courier New, Helvetica, sans-serif; 
+  text-align:center;
+}
+
+#MapBox img
+{ 
+  width: 60%;
+  z-index: 999;
+  border: 2px solid #269;
+}
+
+#bird img
+{
+position:fixed;
+top:35%;
+right:20%;
+width:150px;
+height:150px;
+}
+
+#footer
+{
+  position: fixed;
+  width: 99.9%;
+  bottom: -1px;
+  left:0px;
+  background: rgba(30, 91, 137, 0.95);
+  border: 1px solid #269; 
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  z-index: 999;
+}
+
+#footer h2
+{
+  font-size:15px; 
+  text-align:center;
+  color:white;
+  font-family: Courier New, Helvetica, sans-serif;
+}
+
+#websitename
+{
+  position: relative; 
+  text-align: center;
+  color: white;
+
+}
+
+#user-hits
+{
+  top: 0px;
+  position: absolute;
+  text-align: left;
+  color: white;
+  margin-left: 10px;
+}
+
+#user-rank
+{
+  top: 0px;
+  position: absolute;
+  text-align: left;
+  color: white;
+  margin-left: 350px;
+}
+
+@media only screen and (max-width: 700px)
+{
+  #user-hits{display:none}
+  #user-rank{display:none}
+}
+
+@media only screen and (max-width: 1400px)
+{
+  #searchbox{display:none}
+  #user-rank{display:none}
+}
+
+#searchbox
+{
+  position: absolute;
+  top: 30px;
+  right: 10%;
+}
+
+
+.searchButton
+{
+  background: white;
+  font-family: Courier New, Helvetica, sans-serif;
+  border: white 1px solid;
+  border-radius: 5px;	
+}
+
+.searchButton:hover
+{
+  background: #269;
+  border: #0099FF1px solid;
+  color:white;
+}
+
+.input
+{
+  width: 250px;
+  border: #0099FF1px solid;
+  font-family: Courier New, Helvetica, sans-serif;
+  color:white;
+}
+
+.rotate:hover 
+{
+transform: rotate(360deg);
+-webkit-font-smoothing: antialiased;
+}
+
+.rotate 
+{
+transition: all 1.5s ease;
+position:absolute;
+-webkit-font-smoothing: antialiased;
+}
+
+
+
+.zoom:hover 
+{
+-webkit-font-smoothing: antialiased;
+ transform:scale(0.67);
+left:0px;
+bottom:0px; 
+position: fixed;
+z-index: -9999999999; 
+transition: all 1s ease;
+padding:5px;
+ background: rgba(30, 91, 137, 0.5);
+}
+
+.zoom
+{
+  transition: background 0.6s ease-out;  
+}
+
