@@ -8,7 +8,7 @@ from contextlib import closing
 
 #app create
 app = Flask(__name__)
-db_location = 'var/data.db'
+db_location = 'VAR/data.db'
 secret_key = 'the secret key'
 app.secret_key = 'secret'
 #bcrypt = Bcrypt(app)
@@ -49,7 +49,12 @@ def print_users():
     entries = [dict(username=row[0],password=row[1]) for row in cur.fetchall()]
     return render_template('displayUsers.html',entries=entries)
 
-
+@app.route('/feed')
+def feed():
+    db = get_db()
+    cur = db.execute('SELECT title,post FROM post ORDER BY id ASC')
+    posts = [dict(title=row[0],post=row[1]) for row in cur.fetchall()]
+    return render_template('feed.html',posts=posts)
 
 @app.route('/add',methods=['GET','POST'])
 def add():
@@ -132,7 +137,7 @@ def logout():
 @app.route("/", methods={"GET","POST"})
 def profile():
  if 'username' in session:
-  return 'Logged in as %s' % escape(session['username'])
+   print"lol "
  return render_template('home.html')
 
 if __name__ == "__main__":

@@ -47,11 +47,20 @@ body
   left:5%;
   border: 1px solid #269;
   background: rgba(30, 91, 137, 0.5);
-  height: 30%;
+  height: auto;
   position: absolute;
   margin: 0px;
   color: white;
   font-family: Courier New, Helvetica, sans-serif;
+}
+
+.post
+{
+  width: 90%;
+  border: 1px solid #269;
+  background: rgba(35, 100, 137, 0.5 );
+  height: auto;
+  color: black;
 }
 
 #LoginBox
@@ -81,7 +90,7 @@ body
 
 #CreateAccountBox
 {
-  z-index: 999;
+  z-index: 998;
   position: fixed;
   top: 20%;
   bottom : 8%;
@@ -90,7 +99,33 @@ body
   border: 1px solid #269;
   font-family: Courier New, Helvetica, sans-serif; 
   padding:25px;
+  font-size:35px;
 }
+
+#add
+{
+  z-index: 998;
+  position: fixed;
+  left: 20%;
+  top: 20%;
+  background: rgba(30, 91, 137, 0.8);
+  border: 1px solid #269;
+  font-family: Courier New, Helvetica, sans-serif; 
+  padding:35px;
+  font-size:35px;
+}
+
+ul#posts 
+{
+list-style-type: none;
+font-size : 25px;
+}
+
+{
+ font-family: Courier New, Helvetica, sans-serif; 
+}
+
+
 
 #MapBox
 {
@@ -115,10 +150,11 @@ body
 #bird img
 {
 position:fixed;
-top:35%;
+top:55%;
 right:20%;
 width:150px;
 height:150px;
+z-index: 999;
 }
 
 #footer

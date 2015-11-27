@@ -1,6 +1,22 @@
 {% extends "header.html"%}
 {%block content%}
 <div id="mainBody">
-<h2> This is the feed page</h2>
+<h2>See Posts from other Users in A.L.B !</h2>
+<ul id= posts>
+{% for item in posts %}
+<div class=post>
+Title:
+<li>{{ item.title }}</li>
+Post:
+<li>{{ item.post }}</li>
+<br>
+</div>
+<br>
+<br>
+{% else %}
+<li>No posts yet </li>
+{% endfor %}
+</ul>
+
 </div>
 {%endblock%}

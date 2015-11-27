@@ -6,6 +6,13 @@
 <div id=webname> 
 <h1 id="websitename"> Aligators, Lions & Baboons </h2>
 
+<div id= "add">
+<p>
+Create your Account here! 
+<br>
+<br>
+You are a few steps away of creating a A.L.B account! :) 
+</p>
 <form action="{{ url_for('add') }}" method="post">
 
 <p>
@@ -21,9 +28,9 @@
   <input required type="password" name="confirm_password" id="confirm_password"
   placeholder="Confirm your password"/>
 </p>
-<input type="submit" value="Create a account"/>
-  {{ error }}
-
+<input type="submit" value="Create an account" class="searchButton"/>
+{{ error }}
 {{form}}
 </form>
+</div>
 {% include "footer.html" %}
