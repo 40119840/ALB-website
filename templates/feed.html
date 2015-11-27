@@ -5,11 +5,11 @@
 <ul id= posts>
 {% for item in posts %}
 <div class=post>
-Title:
+
 <li>{{ item.title }}</li>
-Post:
+
+<li>By:{{ item.Uid }}</li>
 <li>{{ item.post }}</li>
-<br>
 </div>
 <br>
 <br>

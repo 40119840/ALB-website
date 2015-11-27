@@ -1,7 +1,8 @@
 body
 {
   background-image: url("/static/background.jpg");
-  background-size: 100% ,100%;  
+  background-attachment:fixed;
+  background-size: 100% ;
 }
 
 
@@ -118,7 +119,8 @@ body
 ul#posts 
 {
 list-style-type: none;
-font-size : 25px;
+font-size : 29px;
+
 }
 
 {
@@ -278,5 +280,15 @@ padding:5px;
 .zoom
 {
   transition: background 0.6s ease-out;  
+}
+
+::-webkit-scrollbar-track
+{
+  background: #BAE4FE;
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: #036;
 }
 

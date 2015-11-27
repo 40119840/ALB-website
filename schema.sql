@@ -10,7 +10,7 @@ DROP TABLE if EXISTS post;
 
 CREATE TABLE post (
 id integer PRIMARY KEY autoincrement,
-Uid interger,
+Uid text NOT NULL,
 title text NOT NULL,
 post text NOT NULL
 );

@@ -36,11 +36,6 @@ def init_db():
         db.cursor().executescript(f.read())
     db.commit
 
-#def query_db(query, arg=(), one=False):
-#    db = get_db()
-#    cur = db.execute(query,args)
-#    rv = [dict((cur.description[idx][0], value) for idx, value in enumerate(row)) for row in cur.fetchall()]
-#    return (rv[0] if rv else None) if one else rv
 
 @app.route('/display')
 def print_users():
@@ -52,8 +47,8 @@ def print_users():
 @app.route('/feed')
 def feed():
     db = get_db()
-    cur = db.execute('SELECT title,post FROM post ORDER BY id ASC')
-    posts = [dict(title=row[0],post=row[1]) for row in cur.fetchall()]
+    cur = db.execute('SELECT title,Uid,post FROM post ORDER BY id DESC')
+    posts = [dict(title=row[0],Uid=row[1],post=row[2]) for row in cur.fetchall()]
     return render_template('feed.html',posts=posts)
 
 @app.route('/add',methods=['GET','POST'])
@@ -70,8 +65,8 @@ def add():
           #insert in db
           db.cursor().execute('INSERT INTO user (username,password) values(?,?)',[request.form['username'],request.form['password']])
           db.commit()
-          error.append("yeahh info added")
-      return render_template('createAccount.html', error = error, form = form )
+          error="Account Created"
+      return render_template('createAccount.html', error = error )
       return render_template('createAccount.html', error=error)
 
 
@@ -80,13 +75,13 @@ def post():
     if request.method == 'GET':
         return render_template ('newpost.html')
     if request.method == 'POST':
+      lol = session['username']
       info = []
-      form = request.form
       db = get_db()
-      db.cursor().execute('INSERT INTO post (title,post) values(?,?)',[request.form['title'],request.form['post']])
+      db.cursor().execute('INSERT INTO post (Uid,title,post) VALUES(?,?,?)',[session['username'],request.form['title'],request.form['post']])
       db.commit()
       info.append("post added")
-    return render_template('newpost.html', info = info , form = form)
+    return render_template('newpost.html',lol=lol, info = info )
 
 
 @app.route('/login', methods = ['GET','POST'])
