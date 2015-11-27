@@ -1,0 +1,18 @@
+<!doctype html>
+<header>
+  <title> A.L.B. </title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css') }}">
+</header>
+<div id=webname> 
+<h1 id="websitename"> Aligators, Lions & Baboons </h2>
+
+<ul class= entries>
+{% for item in entries  %}
+<li>{{ item.username }}</li>
+<li>{{ item.password }}</li>
+{% else %}
+<li>No entries yet </li>
+{% endfor %}
+</ul>
+
+{% include "footer.html" %}
