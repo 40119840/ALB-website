@@ -1,0 +1,29 @@
+<!doctype html>
+<header>
+  <title> A.L.B. </title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css') }}">
+</header>
+<div id=webname> 
+<h1 id="websitename"> Aligators, Lions & Baboons </h2>
+
+<form action="{{ url_for('add') }}" method="post">
+
+<p>
+  <label for="username"> Username : </label>
+  <input required type="text" name="username" id="username" placeholder="Choose a username"/>
+</p>
+<p>
+  <label for="password">Password :</label>
+  <input required type="password" name="password" id="password" placeholder="Create a password"/>
+</p>
+<p>
+  <label for="confirm_pswd">Confirm your password :</label>
+  <input required type="password" name="confirm_password" id="confirm_password"
+  placeholder="Confirm your password"/>
+</p>
+<input type="submit" value="Create a account"/>
+  {{ error }}
+
+{{form}}
+</form>
+{% include "footer.html" %}
