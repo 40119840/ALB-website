@@ -1,0 +1,48 @@
+<!doctype html>
+<header>
+  <title> A.L.B. </title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css') }}">
+</header>
+<div id=webname> 
+<h1 id="websitename"> Aligators, Lions & Baboons </h2>
+</div>
+
+<div id="LoginBox">
+<form action="{{ url_for('login') }}" method="post">
+<h1>Login:</h1>
+<form>
+<h2>User name:</h2>
+<br>
+<p>
+  <label for="username"> Username : </label>
+  <input required type="text" name="username" id="username" placeholder="Choose a username"/>
+</p>
+<p>
+  <label for="password">Password :</label>
+  <input required type="text" name="password" id="password" placeholder="Create a password"/>
+</p>
+<input type="submit" onclick="alert('{{ info }}')" value="Login" class="searchButton">
+</form>
+
+
+</div>
+<div id="bird">
+<a href="http://localhost:5000/"> <img src="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/magic-marker-icons-animals/114677-magic-marker-icon-animals-animal-bird6-sc44.png" style="width="100"="" height="100" position:"absolute" align:"center" class="rotate" <="" html=""> </a> 
+
+
+
+<div id=CreateAccountBox>
+<p>
+<a href="http://localhost:5000/add"> REGISTER NOW </a>
+</p>
+</div>
+
+{{ info }}
+</div>
+<div id="MapBox">
+<h2> Be Part of the Adventure! </h2>
+<div id="fullscreen">
+ <img src="/static/world-map.jpg"  class="zoom" <="" html="">
+</div>
+</div>
+{% include "footer.html" %}
