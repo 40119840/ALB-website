@@ -47,8 +47,8 @@ def print_users():
 @app.route('/feed')
 def feed():
     db = get_db()
-    cur = db.execute('SELECT title,Uid,post FROM post ORDER BY id DESC')
-    posts = [dict(title=row[0],Uid=row[1],post=row[2]) for row in cur.fetchall()]
+    cur = db.execute('SELECT title,Uid,loc,post FROM post ORDER BY id DESC')
+    posts = [dict(title=row[0],Uid=row[1],loc=row[2],post=row[3]) for row in cur.fetchall()]
     return render_template('feed.html',posts=posts)
 
 @app.route('/add',methods=['GET','POST'])
@@ -81,15 +81,20 @@ def add():
 
 @app.route('/post', methods=['GET', 'POST'])
 def post():
-    if request.method == 'GET':
-        return render_template ('newpost.html')
-    if request.method == 'POST':
-      info = []
-      db = get_db()
-      db.cursor().execute('INSERT INTO post (Uid,title,post) VALUES(?,?,?)',[session['username'],request.form['title'],request.form['post']])
-      db.commit()
-      info.append("post added")
-    return render_template('newpost.html', info = info )
+     if Session() is None:
+       return redirect (url_for('login'))
+     else:
+      if request.method == 'GET':
+        return render_template('newpost.html')
+      if request.method == 'POST':
+       info = []
+       db = get_db()
+       db.cursor().execute('INSERT INTO post (Uid,title,post,loc) VALUES(?,?,?,?)',[session['username'],request.form['title'],request.form['post'],request.form['location']])
+       db.commit()
+       info.append("new post added")
+       return render_template('newpost.html', info = info )
+    
+      
 
 
 @app.route('/login', methods = ['GET','POST'])
@@ -138,7 +143,6 @@ def logout():
 def Session():
   if 'username' in session:
    return session
-   print "session active"
   else:
    return None
 
@@ -150,8 +154,8 @@ def profile():
   else: 
    print "logged in"
    db = get_db()
-   cur = db.execute("SELECT title,Uid,post FROM post WHERE Uid LIKE '" + session['username'] +"'")
-   posts = [dict(title=row[0],Uid=[1],post=row[2])for row in cur.fetchall()]
+   cur = db.execute("SELECT title,Uid,loc,post FROM post WHERE Uid LIKE '" + session['username'] +"'")
+   posts = [dict(title=row[0],Uid=row[1],loc=row[2],post=row[3])for row in cur.fetchall()]
    return render_template('home.html',posts=posts)
 
 if __name__ == "__main__":

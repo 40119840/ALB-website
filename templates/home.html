@@ -1,7 +1,7 @@
 {% extends "header.html"%}
 {%block content%}
 <div id="mainBody">
-<h2> This is my Post  </h2>
+<h2> These are all my posts:  </h2>
 <ul id= posts>
 {% for item in posts %}
 <div class=post>
@@ -9,6 +9,7 @@
 <li><h3>{{ item.title }}</h3></li>
 
 <li>By:<i>{{ item.Uid }}</i></li>
+<li>Location:<i>{{ item.loc }}</i></li>
 <li><h4>{{ item.post }}</h4></li>
 </div>
 <br>
