@@ -75,7 +75,6 @@ def post():
     if request.method == 'GET':
         return render_template ('newpost.html')
     if request.method == 'POST':
-      lol = session['username']
       info = []
       db = get_db()
       db.cursor().execute('INSERT INTO post (Uid,title,post) VALUES(?,?,?)',[session['username'],request.form['title'],request.form['post']])

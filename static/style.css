@@ -44,7 +44,7 @@ body
 #mainBody 
 {
   width: 90%;
-  top:15%;
+  top:20%;
   left:5%;
   border: 1px solid #269;
   background: rgba(30, 91, 137, 0.5);
@@ -78,11 +78,11 @@ body
 
 #NewPostBox
 {
-  z-index: 999;
+  z-index: 998;
   position: fixed;
   top: 20%;
   bottom : 8%;
-  right:15%;
+  right:30%;
   background: rgba(30, 91, 137, 0.8);
   border: 1px solid #269;
   font-family: Courier New, Helvetica, sans-serif; 
@@ -101,6 +101,46 @@ body
   font-family: Courier New, Helvetica, sans-serif; 
   padding:25px;
   font-size:35px;
+}
+#menubar
+{
+z-index: 999;
+  margin-left:800px;
+  margin-right:800px;
+  width: auto;
+  height: 30px;
+  bottom: 0px;
+  margin-top: -3px;
+  padding:10px;
+  background: rgba(30, 91, 137, 0.95);
+  border: 1px solid #269; 
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  font-family: Courier New, Helvetica, sans-serif;
+
+}
+#menubar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+   
+    
+}
+
+#menubar a
+{
+    display: block;
+    width: 60px;
+    margin-top:7px;
+    margin-left: 50px;
+    font-size: 25px;
+    color: white;
+}
+
+#menubar li {
+    float: left;
+    margin-left:10px;
 }
 
 #add

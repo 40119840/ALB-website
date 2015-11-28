@@ -1,15 +1,15 @@
 {% extends "header.html"%}
 {%block content%}
 <div id="mainBody">
-<h2>See Posts from other Users in A.L.B !</h2>
+<h1>See Posts from other Users in A.L.B !</h1>
 <ul id= posts>
 {% for item in posts %}
 <div class=post>
 
-<li>{{ item.title }}</li>
+<li><h3>{{ item.title }}</h3></li>
 
-<li>By:{{ item.Uid }}</li>
-<li>{{ item.post }}</li>
+<li>By:<i>{{ item.Uid }}</i></li>
+<li><h4>{{ item.post }}</h4></li>
 </div>
 <br>
 <br>
