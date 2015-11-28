@@ -40,8 +40,8 @@ def init_db():
 @app.route('/display')
 def print_users():
     db = get_db()
-    cur = db.execute('SELECT username,password FROM user ORDER BY id ASC')
-    entries = [dict(username=row[0],password=row[1]) for row in cur.fetchall()]
+    cur = db.execute('SELECT username FROM user ORDER BY id ASC')
+    entries = [dict(username=row[0]) for row in cur.fetchall()]
     return render_template('displayUsers.html',entries=entries)
 
 @app.route('/feed')
@@ -57,11 +57,20 @@ def add():
         return render_template ('createAccount.html')
     if request.method == 'POST':
       error = []
+      username = request.form['username']
       form = request.form
+      db= get_db()
+      VAR= "SELECT username FROM user WHERE username LIKE '"+str(username)+ "'"
+      Fname = db.cursor().execute(VAR)
+      print Fname
+      cur =[dict(username=row[0]) for row in Fname.fetchall()]
+      database= str(cur)
+      if username in  database:
+          error = "username already in use"
+          return render_template('createAccount.html',error=error)
       if request.form['password'] != request.form["confirm_password"]:
           error.append("please enter same password")
       if not error:
-          db = get_db()
           #insert in db
           db.cursor().execute('INSERT INTO user (username,password) values(?,?)',[request.form['username'],request.form['password']])
           db.commit()
@@ -80,7 +89,7 @@ def post():
       db.cursor().execute('INSERT INTO post (Uid,title,post) VALUES(?,?,?)',[session['username'],request.form['title'],request.form['post']])
       db.commit()
       info.append("post added")
-    return render_template('newpost.html',lol=lol, info = info )
+    return render_template('newpost.html', info = info )
 
 
 @app.route('/login', methods = ['GET','POST'])
@@ -126,13 +135,24 @@ def logout():
     print" logged out"
     return redirect(url_for('login'))
 
-
+def Session():
+  if 'username' in session:
+   return session
+   print "session active"
+  else:
+   return None
 
 @app.route("/", methods={"GET","POST"})
 def profile():
- if 'username' in session:
-   print"lol "
- return render_template('home.html')
+  if Session() is None:
+    return redirect(url_for('login'))
+    print "not logged in"
+  else: 
+   print "logged in"
+   db = get_db()
+   cur = db.execute("SELECT title,Uid,post FROM post WHERE Uid LIKE '" + session['username'] +"'")
+   posts = [dict(title=row[0],Uid=[1],post=row[2])for row in cur.fetchall()]
+   return render_template('home.html',posts=posts)
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0',debug=True)
