@@ -1,19 +1,22 @@
 from flask import Flask, redirect, url_for, abort, request, render_template, session, g, flash
-import sqlite3, os , Cookie
+import sqlite3, os 
 import ConfigParser
+from werkzeug import secure_filename
 from flask.ext.wtf import Form
 from wtforms import TextField, HiddenField
+from werkzeug.security import generate_password_hash, \
+     check_password_hash
 from contextlib import closing
-#from flask.ext.bcrypt import Bcrypt
-
+from time import gmtime, strftime
+from datetime import datetime
 #app create
 app = Flask(__name__)
 db_location = 'VAR/data.db'
 secret_key = 'the secret key'
 app.secret_key = 'secret'
-#bcrypt = Bcrypt(app)
-#database functions
-
+app.config['UPLOAD_FOLDER'] = 'static/'
+ALLOWED_EXTENSIONS = set(['txt','pdf','jpg','jpeg','gif'])
+#database function
 
 def get_db():
     db = getattr(g,'db',None)
@@ -36,6 +39,10 @@ def init_db():
         db.cursor().executescript(f.read())
     db.commit
 
+def allowed_file(filename):
+    return '.' in filename and \
+      filename.rsplit('.',1) [1] in ALLOWED_EXTENSIONS
+
 
 @app.route('/display')
 def print_users():
@@ -47,8 +54,8 @@ def print_users():
 @app.route('/feed')
 def feed():
     db = get_db()
-    cur = db.execute('SELECT title,Uid,loc,post FROM post ORDER BY id DESC')
-    posts = [dict(title=row[0],Uid=row[1],loc=row[2],post=row[3]) for row in cur.fetchall()]
+    cur = db.execute('SELECT title,Uid,loc,time,post FROM post ORDER BY id DESC')
+    posts = [dict(title=row[0],Uid=row[1],loc=row[2],time=row[3],post=row[4]) for row in cur.fetchall()]
     return render_template('feed.html',posts=posts)
 
 @app.route('/add',methods=['GET','POST'])
@@ -57,6 +64,7 @@ def add():
         return render_template ('createAccount.html')
     if request.method == 'POST':
       error = []
+      file = request.files['file']
       username = request.form['username']
       form = request.form
       db= get_db()
@@ -71,10 +79,15 @@ def add():
       if request.form['password'] != request.form["confirm_password"]:
           error.append("please enter same password")
       if not error:
+          if file  and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filename = "pic/" + username + ".jpg"
+            file.save(os.path.join(app.config['UPLOAD_FILE'],filename))
+            print "file uplaoded"
           #insert in db
-          db.cursor().execute('INSERT INTO user (username,password) values(?,?)',[request.form['username'],request.form['password']])
-          db.commit()
-          error="Account Created"
+            db.cursor().execute('INSERT INTO user (username,password) values(?,?)',[request.form['username'],request.form['password']])
+            db.commit()
+            error="Account Created"
       return render_template('createAccount.html', error = error )
       return render_template('createAccount.html', error=error)
 
@@ -87,11 +100,23 @@ def post():
       if request.method == 'GET':
         return render_template('newpost.html')
       if request.method == 'POST':
-       info = []
+       time =  str(datetime.now())
+       l = list(time)
+       l[19] = ""
+       l[20] = ""
+       l[21] = ""
+       l[22] = ""
+       l[23] = ""
+       l[24] = ""
+       l[25] = ""
+       time = "".join(l)
+       print time
        db = get_db()
-       db.cursor().execute('INSERT INTO post (Uid,title,post,loc) VALUES(?,?,?,?)',[session['username'],request.form['title'],request.form['post'],request.form['location']])
+       db.cursor().execute('INSERT INTO post (Uid,title,post,loc,time) \
+       VALUES(?,?,?,?,?)',[session['username'],request.form['title'],request.form['post'],\
+       request.form['location'],time])
        db.commit()
-       info.append("new post added")
+       info="New post added to A.L.B databse on the " + time
        return render_template('newpost.html', info = info )
     
       
@@ -124,7 +149,6 @@ def login():
       print "success"
       session['id'] = SID
       session['username']= username
-      info = "You have been logged in."
       return redirect(url_for('profile'))
     else:
       info = "Wrong information please try again"
@@ -140,6 +164,17 @@ def logout():
     print" logged out"
     return redirect(url_for('login'))
 
+@app.route('/search')
+def search():
+  if request.method == 'post':
+   db = get_db
+   print "working"
+   cur = db.execute("SELECT title,Uid,loc,time,post FROM post WHERE title LIKE \
+   '" + request.form['search']+ "'ORDER BY id DESC ")
+   sResult = [dict(title=row[0],Uid=row[1],loc=row[2],time=[3],post=row[4])for \
+   row in cur.fetchall()]
+   return render_template('search.html', sResult=sResult)
+
 def Session():
   if 'username' in session:
    return session
@@ -151,12 +186,14 @@ def profile():
   if Session() is None:
     return redirect(url_for('login'))
     print "not logged in"
-  else: 
+  else:
    print "logged in"
+   info = session['username']
    db = get_db()
-   cur = db.execute("SELECT title,Uid,loc,post FROM post WHERE Uid LIKE '" + session['username'] +"'")
-   posts = [dict(title=row[0],Uid=row[1],loc=row[2],post=row[3])for row in cur.fetchall()]
-   return render_template('home.html',posts=posts)
+   cur = db.execute("SELECT title,Uid,loc,time,post FROM post WHERE Uid LIKE '" + \
+   session['username'] +"'ORDER BY id DESC")
+   posts = [dict(title=row[0],Uid=row[1],loc=row[2],time=row[3],post=row[4])for row in cur.fetchall()]
+   return render_template('home.html',posts=posts,info=info )
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0',debug=True)

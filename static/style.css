@@ -55,6 +55,18 @@ body
   font-family: Courier New, Helvetica, sans-serif;
 }
 
+#mainBody a
+{
+color:black;
+text-decoration: none;
+}
+
+#mainBody a:hover
+{
+color:white;
+text-decoration: none;
+}
+
 .post
 {
   width: 90%;
@@ -330,6 +342,7 @@ z-index: 999;
   position: absolute;
   top: 30px;
   right: 10%;
+color:black;
 }
 
 #log a
@@ -374,7 +387,7 @@ margin-right:50px;
   width: 250px;
   border: #0099FF1px solid;
   font-family: Courier New, Helvetica, sans-serif;
-  color:white;
+  color:black;
 }
 
 .rotate:hover 

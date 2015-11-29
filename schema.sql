@@ -13,6 +13,7 @@ id integer PRIMARY KEY autoincrement,
 Uid text NOT NULL,
 title text NOT NULL,
 post text NOT NULL,
-loc text NOT NULL
+loc text NOT NULL,
+time text NOT NULL
 );
 

@@ -1,7 +1,7 @@
 {% extends "header.html"%}
 {%block content%}
 <div id="mainBody">
-<h1>See Posts from other Users in A.L.B !</h1>
+<h1>Search Result in A.L.B:</h1>
 <ul id= posts>
 {% for item in posts %}
 <div class=post>
@@ -10,7 +10,7 @@
 <div id='inlineInfo'>
 <li>By:<i>{{ item.Uid }}</i></li>
 <li>Location:<i>{{ item.loc }}</i></li>
-<li>Published on:<i>{{ item.time }}</i></li>
+<li><i>{{ item.time }}</i></li>
 </div>
 <br>
 <li><h4>{{ item.post }}</h4></li>
@@ -18,7 +18,7 @@
 <br>
 <br>
 {% else %}
-<li>No posts yet </li>
+<li>No posts corresponding to your search </li>
 {% endfor %}
 </ul>
 
