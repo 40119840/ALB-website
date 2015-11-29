@@ -1,0 +1,4 @@
+To launch website launch >>> python welcome.py
+VAR:data.db
+TEMPLATES: html pages
+static : profile pictures+background+style.css
