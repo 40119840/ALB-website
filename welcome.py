@@ -14,7 +14,7 @@ app = Flask(__name__)
 db_location = 'VAR/data.db'
 secret_key = 'the secret key'
 app.secret_key = 'secret'
-app.config['UPLOAD_FOLDER'] = 'static/'
+#app.config['UPLOAD_FOLDER']
 ALLOWED_EXTENSIONS = set(['txt','pdf','jpg','jpeg','gif'])
 #database function
 
@@ -81,14 +81,15 @@ def add():
       if not error:
           if file  and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            filename = "pic/" + username + ".jpg"
-            file.save(os.path.join(app.config['UPLOAD_FILE'],filename))
+            filename = "static/pic/" + username + ".jpg"
+            print filename
+            #print app.config['UPLOAD_FILE']
+            file.save(filename)
             print "file uplaoded"
-          #insert in db
+            #insert in db
             db.cursor().execute('INSERT INTO user (username,password) values(?,?)',[request.form['username'],request.form['password']])
             db.commit()
             error="Account Created"
-      return render_template('createAccount.html', error = error )
       return render_template('createAccount.html', error=error)
 
 
@@ -164,16 +165,18 @@ def logout():
     print" logged out"
     return redirect(url_for('login'))
 
-@app.route('/search')
+@app.route('/search', methods=['POST', 'GET'])
 def search():
-  if request.method == 'post':
-   db = get_db
-   print "working"
-   cur = db.execute("SELECT title,Uid,loc,time,post FROM post WHERE title LIKE \
-   '" + request.form['search']+ "'ORDER BY id DESC ")
-   sResult = [dict(title=row[0],Uid=row[1],loc=row[2],time=[3],post=row[4])for \
-   row in cur.fetchall()]
-   return render_template('search.html', sResult=sResult)
+  if request.method == 'POST':
+    db = get_db
+    print "working"
+    sql = "SELECT title,Uid,loc,time,post FROM post WHERE title LIKE '" + request.form['search'] + "' ORDER BY id DESC "
+    print sql
+    cur = db.execute(sql).fetchall()
+    sResult = [dict(title=row[0],Uid=row[1],loc=row[2],time=[3],post=row[4])for \
+    row in cur.fetchall()]
+    return render_template('search.html', sResult=sResult)
+  return redirect(url_for('profile'))
 
 def Session():
   if 'username' in session:
